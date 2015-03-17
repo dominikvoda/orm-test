@@ -1,0 +1,6 @@
+{dump $date}
+{if $date == "-0001-11-30 00:00:00"}
+    Dosud nepřihlášen
+{else}
+    {$date|date:'j. m. Y H:i'}
+{/if}

@@ -1,0 +1,36 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+*}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>{ifset title}{include title|striptags} | {/ifset}CML Inpex</title>
+        <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+        <script type="text/javascript" src="{$basePath}/js/jquery.min.js"></script>
+        <script type="text/javascript" src="{$basePath}/js/jquery-ui.min.js"></script>
+        {control css}
+        {block head}{/block}
+    </head>
+
+    <body>
+        <div id='wrapper'>
+            {control navigation}
+        </div>
+        <div id='page-wrapper'>
+            <div class="row row-alerts">
+                <div class="col-lg-12">
+                    <div n:foreach="$flashes as $flash" class="alert alert-dismissible alert-{$flash->type}" role="alert">
+                        {$flash->message}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+            </div>
+            {include content}
+        </div>
+        {control js}
+    </body>
+</html>

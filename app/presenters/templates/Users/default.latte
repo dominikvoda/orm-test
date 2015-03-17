@@ -1,0 +1,16 @@
+{* Latte template *}
+
+{block content}
+
+<div class="row">
+    <div class="col-lg-12"><h1 class="page-header">Uživatelé <small> <a n:href="Users:add"> Přidat</a></small></h1></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Uživatelé</strong></div>
+            {control usersGrid}
+        </div>
+    </div>
+</div>

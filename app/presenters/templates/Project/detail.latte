@@ -1,0 +1,127 @@
+{* Latte template *}
+
+{block content}
+
+<div class='row'>
+    <div class="col-lg-12">
+        <h1 class='page-header'>{$project->name}</h1>
+    </div>
+</div>
+
+{include 'projectNavigation.latte'}
+
+<div class='row'>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="fa fa-info"></i> Informace o projektu</div>
+            <table class='table table-striped'>
+                <tr><th>Název</th><td>{$project->name}</td></tr>
+                <tr n:if="$project->date"><th>Datum zadání</th><td>{$project->date|date:'j. m. Y.'}</td></tr>
+                <tr n:if="$project->url"><th>Doména</th><td><a href="{$project->url}">{$project->url}</a></td></tr>
+                <tr n:if="$project->git"><th>Git repozitář</th><td><a href="{$project->git}">Odkaz</a></td></tr>
+            </table>
+        </div>
+
+        <div class="panel panel-default" n:if="$contacts">
+            <div class="panel-heading"><i class="fa fa-link"></i> Kontaky</div>
+            <div class="panel-body">
+                <div class="panel panel-primary" n:foreach="$contacts as $contact">
+                    <div class="panel-heading">{$contact->post}</div>
+                    <table class='table table-striped'>
+                        <tr><th>Jméno</th><td>{$contact->name}</td></tr>
+                        <tr n:if="$contact->email"><th>E-mail</th><td><a href="mailto:{$contact->email}">{$contact->email}</a></td></tr>                            
+                        <tr n:if="$contact->email2"><th>E-mail 2</th><td><a href="mailto:{$contact->email2}">{$contact->email2}</a></td></tr>
+                        <tr n:if="$contact->telephone"><th>Telefon</th><td>{$contact->telephone}</td></tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default" n:if="$presenter->countSubTasks($tasks)">
+            <div class="panel-heading clearfix"><div class="pull-left"><i class="fa fa-tasks"></i> Úkoly</div><div class="pull-right"><strong>{$project->progress}%</strong></div></div>
+            <div class="panel-body">
+                <div class="panel-group" id="accordion">
+                    {foreach $tasks as $task}
+                        {var subitems = $presenter->getSubTasks($task->id)}
+                        {var subitemsCount = $presenter->countSubTasks($subitems)}
+                        <div n:class="$task->progress == 100 ?  panel-success, panel, panel-default">
+                            <div class="panel-heading clearfix">
+                                {if $subitemsCount}
+                                    <a class="pull-left" data-toggle="collapse" data-parent="#accordion" href="#collapseSubtask{$task->id}">{$task->name}</a>
+                                {else}
+                                    {$task->name}
+                                {/if}
+                                <div class="pull-right"><strong>{$task->progress}%</strong></div>
+                            </div>
+                            <div id="collapseSubtask{$task->id}" class="panel-collapse collapse" n:if="$subitemsCount">
+                                <div class="panel-body">
+                                    {foreach $subitems as $subtask}
+                                        {if $subtask->progress == 100}
+                                            {var barType = 'progress-bar-success'}
+                                        {elseif $subtask->progress == 0}
+                                            {var barType = 'progress-bar-danger'}
+                                        {else}
+                                            {var barType = 'progress-bar-warning'}
+                                        {/if}
+                                        <strong>{$subtask->name}</strong>
+                                        <div class="progress">
+                                            <div class="progress-bar {$barType}" role="progressbar" aria-valuenow="{$subtask->progress|number:0}" aria-valuemin="0" aria-valuemax="100" style="width: {$subtask->progress|number:0}%; min-width: 10%">
+                                                {$subtask->progress}%
+                                            </div>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="fa fa-file"></i> Soubory k projektu</div>
+            <div class="panel-body">
+                <p class="text-muted">This is an example of muted text.</p>
+                <p class="text-primary">This is an example of primary text.</p>
+                <p class="text-success">This is an example of success text.</p>
+                <p class="text-info">This is an example of info text.</p>
+                <p class="text-warning">This is an example of warning text.</p>
+                <p class="text-danger">This is an example of danger text.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default" n:if="$webhosting">
+            <div class="panel-heading"><i class="fa fa-server"></i> Webhosting</div>
+            <table class='table table-striped'>
+                <tr><th>Název</th><td>{$webhosting->name}</td></tr>
+                <tr><th>Administrace</th><td><a href="{$webhosting->link}">{$webhosting->link}</a></td></tr>
+                <tr><th>Uživatelské jméno</th><td>{$webhosting->username}</td></tr>
+                <tr><th>Heslo</th><td class="hide-password">{$webhosting->password}</td></tr>
+            </table>
+        </div>
+
+        <div class="panel panel-default" n:if="$ftp">
+            <div class="panel-heading"><i class="fa fa-server"></i> FTP</div>
+            <table class='table table-striped'>
+                <tr><th>Hostitel</th><td>{$ftp->host}</td></tr>
+                <tr><th>Uživatel</th><td>{$ftp->username}</td></tr>
+                <tr><th>Heslo</th><td class="hide-password">{$ftp->password}</td></tr>
+            </table>
+        </div>
+
+        <div class="panel panel-default" n:if="$database">
+            <div class="panel-heading"><i class="fa fa-database"></i> Database</div>
+            <table class='table table-striped'>
+                <tr><th>Hostitel</th><td>{$database->host}</td></tr>
+                <tr><th>Uživatel</th><td>{$database->username}</td></tr>
+                <tr><th>Heslo</th><td class="hide-password">{$database->password}</td></tr>
+                <tr><th>Název databáze</th><td>{$database->name}</td></tr>
+                <tr><th>PhpMyAdmin</th><td><a href='{$database->phpmyadmin_url}'>{$database->phpmyadmin_url}</a></td></tr>
+                <tr><th>Server (phpMyAdmin)</th><td>{$database->phpmyadmin_server}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>

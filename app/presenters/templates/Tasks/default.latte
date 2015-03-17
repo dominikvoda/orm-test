@@ -1,0 +1,20 @@
+{* Latte template *}
+
+{block content}
+
+<div class="row"><div class="col-lg-12"><h1 class="page-header">Úkoly <small> <a n:href="Tasks:add"> Přidat úkol</a></small></h1></div></div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Moje úkoly</strong></div>
+            {control myTasksGrid}
+        </div>
+    </div>
+        <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Poslední dokončené úkoly</strong></div>
+            {control lastFinishedTasksGrid}
+        </div>
+    </div>
+</div>
