@@ -41,10 +41,6 @@ class ProjectPresenter extends BasePresenter {
     public function renderDefault() {
         //dump($this->orm->project->findDefaultView());
     }
-    
-    public function countSubTasks($param){
-        return false;
-    }
 
     public function actionDetail($id) {
         $this->template->project = $this->orm->project->getById($id);

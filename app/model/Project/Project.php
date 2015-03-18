@@ -11,6 +11,7 @@ namespace Orm;
 use Nextras\Orm\Entity\Entity;
 use Nextras\Dbal\Utils\DateTime;
 use Nextras\Orm\Relationships\ManyHasMany;
+use Nextras\Orm\Relationships\OneHasMany;
 
 /**
  * Description of Project
@@ -23,9 +24,12 @@ use Nextras\Orm\Relationships\ManyHasMany;
  * @property string $name
  * @property DateTime $createdAt
  * @property float $progress
- * @property string $url
- * @property ManyHasMany|Contact[] $contacts {m:n ContactsRepository primary}
+ * @property ManyHasMany|Contact[] $contacts {m:n ContactsRepository primary} 
+ * @property OneHasMany|Task[] $allTasks {1:m TasksRepository}
+ * @property-read Task[] $tasks {virtual}
  */
 class Project extends Entity {
-    //put your code here
+    public function getterTasks(){
+        return $this->allTasks->get()->findBy(['deletedAt' => NULL]);
+    }
 }

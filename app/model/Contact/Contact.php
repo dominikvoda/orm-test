@@ -20,12 +20,6 @@ use Nextras\Orm\Relationships\ManyHasMany;
  * @property string $telephone
  * @property ManyHasMany|Project[] $projects {m:n ProjectsRepository}
  */
-
-/**
- * Description of Contact
- *
- * @author Dominik
- */
 class Contact extends Entity{
     //put your code here
 }

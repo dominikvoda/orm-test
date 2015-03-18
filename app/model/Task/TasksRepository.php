@@ -17,5 +17,7 @@ use Nextras\Orm\Collection\ICollection;
  * @author Dominik
  */
 class TasksRepository extends Repository{
-    //put your code here
+    public function getMain(){
+        return $this->findBy(array('parent' => 0));
+    }
 }

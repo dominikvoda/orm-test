@@ -26,5 +26,9 @@ class ProjectsRepository extends Repository {
         }
         return $data;
     }
+    
+    public function getMain(){
+        return $this->findBy(array('parent' => 0));
+    }
 
 }

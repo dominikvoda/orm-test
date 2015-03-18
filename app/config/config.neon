@@ -19,7 +19,6 @@ session:
 	expiration: 14 days
 
 extensions:
-        webloader: WebLoader\Nette\Extension
         dbal: Nextras\Dbal\Bridges\NetteDI\DbalExtension
         orm: Nextras\Orm\Bridges\NetteDI\OrmExtension
 
@@ -27,42 +26,5 @@ orm:
 	model: Orm\Orm
 
 services:
-	#- App\Model\UserManager
-	#TasksModel: App\Model\TasksModel
-	#LogModel: App\Model\LogModel
 	router: App\RouterFactory::createRouter
 	lessFilter: WebLoader\Filter\LessFilter
-
-webloader:
-    css:
-        default:
-            files:
-                - bootstrap.min.css
-                - metis-menu.min.css
-                - bootstrap-theme.min.css
-                - bootstrap-datetimepicker.min.css
-                - dropzone.css
-                - font-awesome.min.css
-                - style.less
-                - sweet-alert.css
-                - sb-admin-2.css
-            fileFilters:
-                - @lessFilter
-    js:
-        default:
-            files:
-                - less.js
-                - bootstrap.min.js
-                - metis-menu.min.js
-                - bootstrap-datetimepicker.min.js
-                - bootstrap-datetimepicker.cs.js
-                - dropzone.js
-                - live-form-validation.js
-                - jquery.nette.js
-                - sweet-alert.js
-                - main.js
-                - sb-admin-2.js
-                - sweet-alert-alerts.list.js
-latte:
-    macros:
-        - Nextras\Latte\Macros\RedefineMacro::install

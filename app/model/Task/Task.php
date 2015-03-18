@@ -24,12 +24,13 @@ use Nextras\Orm\Relationships\ManyHasOne;
  * Task
  * @property string $name
  * @property float $progress 
- * @property Project|ManyHasOne $projects {m:1 ProjectsRepository}
  * @property DateTime $addDate
  * @property DateTime|null $finishDate
  * @property DateTime|null $endDate
- * @property User|OneHasMany $users {1:m UsersRepository}
+ * @property DateTime|null $deletedAt
+ * @property Project $project {m:1 ProjectsRepository $allTasks} 
+ * @property Task|NULL $parent {m:1 TasksRepository $subtasks}
+ * @property OneHasMany|Task[] $subtasks {1:m TasksRepository $parent}
  */
 class Task extends Entity{
-    //put your code here
 }
